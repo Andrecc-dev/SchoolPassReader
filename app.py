@@ -1,101 +1,54 @@
 from flask import Flask, request, render_template
-import sqlite3
+
 from datetime import datetime
 
+from database import (
+
+    criar_tabelas,
+
+    cadastrar_aluno,
+
+    listar_alunos,
+
+    buscar_aluno_por_matricula,
+
+    verificar_ultimo_acesso,
+
+    registrar_acesso,
+
+    verificar_presenca_dia,
+
+    registrar_presenca,
+
+    gerar_relatorio_acessos,
+
+    gerar_relatorio_presencas
+
+)
+
 app = Flask(__name__)
-
-# =========================================
-# CONEXÃO COM BANCO
-# =========================================
-
-def conectar_banco():
-    return sqlite3.connect("escola.db")
 
 # =========================================
 # CRIAR TABELAS
 # =========================================
 
-conexao = conectar_banco()
-
-cursor = conexao.cursor()
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS alunos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT,
-    idade INTEGER,
-    turma TEXT
-)
-""")
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS presencas (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    aluno_id INTEGER,
-    horario TEXT
-)
-""")
-
-conexao.commit()
-
-conexao.close()
+criar_tabelas()
 
 # =========================================
 # PÁGINA INICIAL
 # =========================================
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def inicio():
-
-    if request.method == "POST":
-
-        nome = request.form.get("nome")
-        idade = request.form.get("idade")
-        turma = request.form.get("turma")
-
-        conexao = conectar_banco()
-
-        cursor = conexao.cursor()
-
-        cursor.execute("""
-        INSERT INTO alunos (nome, idade, turma)
-        VALUES (?, ?, ?)
-        """, (nome, idade, turma))
-
-        conexao.commit()
-
-        conexao.close()
 
     return render_template("index.html")
 
 # =========================================
-# LISTAR ALUNOS
+# CADASTRAR ALUNO
 # =========================================
 
-@app.route("/alunos")
-def listar_alunos():
-
-    conexao = conectar_banco()
-
-    cursor = conexao.cursor()
-
-    cursor.execute("SELECT * FROM alunos")
-
-    alunos = cursor.fetchall()
-
-    conexao.close()
-
-    return render_template(
-        "alunos.html",
-        alunos=alunos
-    )
-
-# =========================================
-# REGISTRAR PRESENÇA
-# =========================================
-
-@app.route("/presenca", methods=["GET", "POST"])
-def registrar_presenca():
+@app.route("/cadastro", methods=["GET", "POST"])
+def cadastro():
 
     mensagem = ""
 
@@ -103,65 +56,165 @@ def registrar_presenca():
 
         nome = request.form.get("nome")
 
-        conexao = conectar_banco()
+        idade = request.form.get("idade")
 
-        cursor = conexao.cursor()
+        turma = request.form.get("turma")
 
-        cursor.execute(
-            "SELECT id FROM alunos WHERE nome = ?",
-            (nome,)
+        matricula = request.form.get("matricula")
+
+        cadastrar_aluno(
+            nome,
+            idade,
+            turma,
+            matricula
         )
 
-        aluno = cursor.fetchone()
+        mensagem = "Aluno cadastrado com sucesso!"
+
+    return render_template(
+        "cadastro.html",
+        mensagem=mensagem
+    )
+
+# =========================================
+# LISTAR ALUNOS
+# =========================================
+
+@app.route("/alunos")
+def alunos():
+
+    lista_alunos = listar_alunos()
+
+    return render_template(
+        "alunos.html",
+        alunos=lista_alunos
+    )
+
+# =========================================
+# REGISTRAR ACESSO
+# =========================================
+
+@app.route("/acesso", methods=["GET", "POST"])
+def acesso():
+
+    mensagem = ""
+
+    if request.method == "POST":
+
+        matricula = request.form.get(
+            "matricula"
+        )
+
+        aluno = buscar_aluno_por_matricula(
+            matricula
+        )
 
         if aluno:
 
-            horario = datetime.now().strftime("%H:%M:%S")
+            aluno_id = aluno[0]
 
-            cursor.execute("""
-            INSERT INTO presencas (aluno_id, horario)
-            VALUES (?, ?)
-            """, (aluno[0], horario))
+            nome = aluno[1]
 
-            conexao.commit()
+            horario = datetime.now().strftime(
+                "%d/%m/%Y %H:%M:%S"
+            )
 
-            mensagem = f"Presença registrada às {horario}"
+            data = datetime.now().strftime(
+                "%d/%m/%Y"
+            )
+
+            # =================================
+            # VERIFICAR ÚLTIMO ACESSO
+            # =================================
+
+            ultimo_acesso = verificar_ultimo_acesso(
+                aluno_id
+            )
+
+            # =================================
+            # DEFINIR ENTRADA OU SAÍDA
+            # =================================
+
+            if ultimo_acesso:
+
+                ultimo_tipo = ultimo_acesso[0]
+
+                if ultimo_tipo == "entrada":
+
+                    tipo = "saida"
+
+                else:
+
+                    tipo = "entrada"
+
+            else:
+
+                tipo = "entrada"
+
+            # =================================
+            # REGISTRAR ACESSO
+            # =================================
+
+            registrar_acesso(
+                aluno_id,
+                tipo,
+                horario
+            )
+
+            # =================================
+            # REGISTRAR PRESENÇA
+            # =================================
+
+            presenca_hoje = verificar_presenca_dia(
+                aluno_id,
+                data
+            )
+
+            if not presenca_hoje and tipo == "entrada":
+
+                registrar_presenca(
+                    aluno_id,
+                    data
+                )
+
+            mensagem = (
+                f"{nome} registrou {tipo} às {horario}"
+            )
 
         else:
 
             mensagem = "Aluno não encontrado"
 
-        conexao.close()
-
     return render_template(
-        "presenca.html",
+        "acesso.html",
         mensagem=mensagem
     )
 
 # =========================================
-# RELATÓRIO
+# RELATÓRIO DE ACESSOS
 # =========================================
 
-@app.route("/relatorio")
-def relatorio():
+@app.route("/relatorio-acessos")
+def relatorio_acessos():
 
-    conexao = conectar_banco()
-
-    cursor = conexao.cursor()
-
-    cursor.execute("""
-    SELECT alunos.nome, presencas.horario
-    FROM presencas
-    JOIN alunos
-    ON alunos.id = presencas.aluno_id
-    """)
-
-    relatorio = cursor.fetchall()
-
-    conexao.close()
+    relatorio = gerar_relatorio_acessos()
 
     return render_template(
-        "relatorio.html",
+        "relatorio_acessos.html",
+        relatorio=relatorio
+    )
+
+# =========================================
+# RELATÓRIO DE PRESENÇAS
+# =========================================
+
+@app.route("/relatorio-presencas")
+def relatorio_presencas():
+
+    relatorio = gerar_relatorio_presencas()
+
+    return render_template(
+        "relatorio_presencas.html",
         relatorio=relatorio
     )
 
