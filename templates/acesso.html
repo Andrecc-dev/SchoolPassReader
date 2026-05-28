@@ -30,12 +30,39 @@
 
         <form method="POST">
 
-            <input
-                type="text"
-                name="matricula"
-                placeholder="Digite a matrícula"
+            <select
+                name="tipo_busca"
                 required
+            >
+
+                <option value="matricula">
+
+                    Matrícula
+
+                </option>
+
+                <option value="nome">
+
+                    Nome
+
+                </option>
+
+            </select>
+
+            <input
+
+                type="text"
+
+                name="valor"
+
+                placeholder="
+                Digite a matrícula ou nome
+                "
+
+                required
+
                 autofocus
+
             >
 
             <button type="submit">
@@ -45,7 +72,6 @@
             </button>
 
         </form>
-
         {% if mensagem %}
 
             <div class="mensagem">

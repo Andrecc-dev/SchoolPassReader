@@ -36,11 +36,19 @@
             >
 
             <input
-                type="number"
-                name="idade"
-                placeholder="Idade"
-                required
-            >
+            type="text"
+            name="idade"
+            placeholder="Idade"
+
+            oninput="
+            this.value =
+            this.value.replace(/\D/g, '')
+            "
+
+            maxlength="3"
+
+            required
+            >   
 
             <input
                 type="text"
@@ -53,9 +61,16 @@
                 type="text"
                 name="matricula"
                 placeholder="Matrícula"
+
+                oninput="
+                this.value =
+                this.value.replace(/\D/g, '')
+                "
+
+                maxlength="10"
+
                 required
             >
-
             <button type="submit">
 
                 Cadastrar

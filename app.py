@@ -12,6 +12,8 @@ from database import (
 
     buscar_aluno_por_matricula,
 
+    buscar_aluno_por_nome,
+
     verificar_ultimo_acesso,
 
     registrar_acesso,
@@ -44,7 +46,7 @@ def inicio():
     return render_template("index.html")
 
 # =========================================
-# CADASTRAR ALUNO
+# CADASTRO DE ALUNOS
 # =========================================
 
 @app.route("/cadastro", methods=["GET", "POST"])
@@ -62,18 +64,77 @@ def cadastro():
 
         matricula = request.form.get("matricula")
 
-        cadastrar_aluno(
+        # =====================================
+        # VALIDAR MATRÍCULA
+        # =====================================
+
+        if not matricula.isdigit():
+
+            mensagem = (
+                "A matrícula deve conter apenas números!"
+            )
+
+            return render_template(
+
+                "cadastro.html",
+
+                mensagem=mensagem
+
+            )
+
+        # =====================================
+        # VALIDAR IDADE
+        # =====================================
+
+        if not idade.isdigit():
+
+            mensagem = (
+                "A idade deve conter apenas números!"
+            )
+
+            return render_template(
+
+                "cadastro.html",
+
+                mensagem=mensagem
+
+            )
+
+        # =====================================
+        # CADASTRAR ALUNO
+        # =====================================
+
+        resultado = cadastrar_aluno(
+
             nome,
             idade,
             turma,
             matricula
+
         )
 
-        mensagem = "Aluno cadastrado com sucesso!"
+        # =====================================
+        # VERIFICAR RESULTADO
+        # =====================================
+
+        if resultado:
+
+            mensagem = (
+                "Aluno cadastrado com sucesso!"
+            )
+
+        else:
+
+            mensagem = (
+                "Matrícula já cadastrada!"
+            )
 
     return render_template(
+
         "cadastro.html",
+
         mensagem=mensagem
+
     )
 
 # =========================================
@@ -83,11 +144,18 @@ def cadastro():
 @app.route("/alunos")
 def alunos():
 
-    lista_alunos = listar_alunos()
+    busca = request.args.get("busca")
+
+    lista_alunos = listar_alunos(
+        busca
+    )
 
     return render_template(
+
         "alunos.html",
+
         alunos=lista_alunos
+
     )
 
 # =========================================
@@ -101,13 +169,37 @@ def acesso():
 
     if request.method == "POST":
 
-        matricula = request.form.get(
-            "matricula"
+        tipo_busca = request.form.get(
+            "tipo_busca"
         )
 
-        aluno = buscar_aluno_por_matricula(
-            matricula
+        valor = request.form.get(
+            "valor"
         )
+
+        # =================================
+        # BUSCAR POR MATRÍCULA
+        # =================================
+
+        if tipo_busca == "matricula":
+
+            aluno = buscar_aluno_por_matricula(
+                valor
+            )
+
+        # =================================
+        # BUSCAR POR NOME
+        # =================================
+
+        else:
+
+            aluno = buscar_aluno_por_nome(
+                valor
+            )
+
+        # =================================
+        # VERIFICAR ALUNO
+        # =================================
 
         if aluno:
 
@@ -156,9 +248,13 @@ def acesso():
             # =================================
 
             registrar_acesso(
+
                 aluno_id,
+
                 tipo,
+
                 horario
+
             )
 
             # =================================
@@ -166,28 +262,40 @@ def acesso():
             # =================================
 
             presenca_hoje = verificar_presenca_dia(
+
                 aluno_id,
+
                 data
+
             )
 
             if not presenca_hoje and tipo == "entrada":
 
                 registrar_presenca(
+
                     aluno_id,
+
                     data
+
                 )
 
             mensagem = (
-                f"{nome} registrou {tipo} às {horario}"
+                f"{nome} registrou "
+                f"{tipo} às {horario}"
             )
 
         else:
 
-            mensagem = "Aluno não encontrado"
+            mensagem = (
+                "Aluno não encontrado!"
+            )
 
     return render_template(
+
         "acesso.html",
+
         mensagem=mensagem
+
     )
 
 # =========================================
@@ -197,11 +305,18 @@ def acesso():
 @app.route("/relatorio-acessos")
 def relatorio_acessos():
 
-    relatorio = gerar_relatorio_acessos()
+    busca = request.args.get("busca")
+
+    relatorio = gerar_relatorio_acessos(
+        busca
+    )
 
     return render_template(
+
         "relatorio_acessos.html",
+
         relatorio=relatorio
+
     )
 
 # =========================================
@@ -211,13 +326,19 @@ def relatorio_acessos():
 @app.route("/relatorio-presencas")
 def relatorio_presencas():
 
-    relatorio = gerar_relatorio_presencas()
+    busca = request.args.get("busca")
 
-    return render_template(
-        "relatorio_presencas.html",
-        relatorio=relatorio
+    relatorio = gerar_relatorio_presencas(
+        busca
     )
 
+    return render_template(
+
+        "relatorio_presencas.html",
+
+        relatorio=relatorio
+
+    )
 # =========================================
 # INICIAR SERVIDOR
 # =========================================

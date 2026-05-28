@@ -28,6 +28,22 @@
 
         </p>
 
+        <form method="GET" class="pesquisa">
+
+    <input
+        type="text"
+        name="busca"
+        placeholder="Pesquisar presença..."
+    >
+
+    <button type="submit">
+
+        Buscar
+
+    </button>
+
+        </form>
+
         <table>
 
             <thead>
@@ -42,7 +58,7 @@
 
                     <th>Data</th>
 
-                    <th>Status</th>
+                    <th>Presença</th>
 
                 </tr>
 
@@ -62,7 +78,19 @@
 
                         <td>{{ presenca[3] }}</td>
 
-                        <td>{{ presenca[4] }}</td>
+                        <td>
+
+                        {% if presenca[4] == 1 %}
+
+                            Presente
+
+                        {% else %}
+
+                            Ausente
+
+                        {% endif %}
+
+                        </td>
 
                     </tr>
 

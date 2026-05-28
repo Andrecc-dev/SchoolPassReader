@@ -101,49 +101,109 @@ def cadastrar_aluno(
 
     cursor = conexao.cursor()
 
-    cursor.execute("""
-    INSERT INTO alunos (
+    try:
 
-        nome,
-        idade,
-        turma,
-        matricula
+        cursor.execute("""
+        INSERT INTO alunos (
 
-    )
+            nome,
+            idade,
+            turma,
+            matricula
 
-    VALUES (?, ?, ?, ?)
-    """, (
-        nome,
-        idade,
-        turma,
-        matricula
-    ))
+        )
 
-    conexao.commit()
+        VALUES (?, ?, ?, ?)
+        """, (
 
-    conexao.close()
+            nome,
+            idade,
+            turma,
+            matricula
+
+        ))
+
+        conexao.commit()
+
+        return True
+
+    except sqlite3.IntegrityError:
+
+        return False
+
+    finally:
+
+        conexao.close()
 
 # =========================================
 # LISTAR ALUNOS
 # =========================================
 
-def listar_alunos():
+def listar_alunos(busca=None):
 
     conexao = conectar_banco()
 
     cursor = conexao.cursor()
 
-    cursor.execute("""
-    SELECT
+    # =====================================
+    # SE TIVER PESQUISA
+    # =====================================
 
-        id,
-        nome,
-        idade,
-        turma,
-        matricula
+    if busca:
 
-    FROM alunos
-    """)
+        cursor.execute("""
+
+        SELECT
+
+            id,
+
+            nome,
+
+            idade,
+
+            turma,
+
+            matricula
+
+        FROM alunos
+
+        WHERE nome LIKE ?
+        OR matricula LIKE ?
+        OR turma LIKE ?
+
+        """, (
+
+            f"%{busca}%",
+
+            f"%{busca}%",
+
+            f"%{busca}%"
+
+        ))
+
+    # =====================================
+    # SEM PESQUISA
+    # =====================================
+
+    else:
+
+        cursor.execute("""
+
+        SELECT
+
+            id,
+
+            nome,
+
+            idade,
+
+            turma,
+
+            matricula
+
+        FROM alunos
+
+        """)
 
     alunos = cursor.fetchall()
 
@@ -339,33 +399,86 @@ def registrar_presenca(
 # RELATÓRIO DE ACESSOS
 # =========================================
 
-def gerar_relatorio_acessos():
+def gerar_relatorio_acessos(busca=None):
 
     conexao = conectar_banco()
 
     cursor = conexao.cursor()
 
-    cursor.execute("""
-    SELECT
+    # =====================================
+    # COM PESQUISA
+    # =====================================
 
-        alunos.nome,
+    if busca:
 
-        alunos.turma,
+        cursor.execute("""
 
-        alunos.matricula,
+        SELECT
 
-        acessos.tipo,
+            alunos.nome,
 
-        acessos.horario
+            alunos.turma,
 
-    FROM acessos
+            alunos.matricula,
 
-    JOIN alunos
+            acessos.tipo,
 
-    ON alunos.id = acessos.aluno_id
+            acessos.horario
 
-    ORDER BY acessos.id DESC
-    """)
+        FROM acessos
+
+        JOIN alunos
+
+        ON alunos.id = acessos.aluno_id
+
+        WHERE alunos.nome LIKE ?
+        OR alunos.matricula LIKE ?
+        OR alunos.turma LIKE ?
+        OR acessos.tipo LIKE ?
+
+        ORDER BY acessos.horario DESC
+
+        """, (
+
+            f"%{busca}%",
+
+            f"%{busca}%",
+
+            f"%{busca}%",
+
+            f"%{busca}%"
+
+        ))
+
+    # =====================================
+    # SEM PESQUISA
+    # =====================================
+
+    else:
+
+        cursor.execute("""
+
+        SELECT
+
+            alunos.nome,
+
+            alunos.turma,
+
+            alunos.matricula,
+
+            acessos.tipo,
+
+            acessos.horario
+
+        FROM acessos
+
+        JOIN alunos
+
+        ON alunos.id = acessos.aluno_id
+
+        ORDER BY acessos.horario DESC
+
+        """)
 
     relatorio = cursor.fetchall()
 
@@ -377,33 +490,83 @@ def gerar_relatorio_acessos():
 # RELATÓRIO DE PRESENÇAS
 # =========================================
 
-def gerar_relatorio_presencas():
+def gerar_relatorio_presencas(busca=None):
 
     conexao = conectar_banco()
 
     cursor = conexao.cursor()
 
-    cursor.execute("""
-    SELECT
+    # =====================================
+    # COM PESQUISA
+    # =====================================
 
-        alunos.nome,
+    if busca:
 
-        alunos.turma,
+        cursor.execute("""
 
-        alunos.matricula,
+        SELECT
 
-        presencas.data,
+            alunos.nome,
 
-        presencas.presente
+            alunos.turma,
 
-    FROM presencas
+            alunos.matricula,
 
-    JOIN alunos
+            presencas.data,
 
-    ON alunos.id = presencas.aluno_id
+            presencas.presente
 
-    ORDER BY presencas.id DESC
-    """)
+        FROM presencas
+
+        JOIN alunos
+
+        ON alunos.id = presencas.aluno_id
+
+        WHERE alunos.nome LIKE ?
+        OR alunos.matricula LIKE ?
+        OR alunos.turma LIKE ?
+
+        ORDER BY presencas.data DESC
+
+        """, (
+
+            f"%{busca}%",
+
+            f"%{busca}%",
+
+            f"%{busca}%"
+
+        ))
+
+    # =====================================
+    # SEM PESQUISA
+    # =====================================
+
+    else:
+
+        cursor.execute("""
+
+        SELECT
+
+            alunos.nome,
+
+            alunos.turma,
+
+            alunos.matricula,
+
+            presencas.data,
+
+            presencas.presente
+
+        FROM presencas
+
+        JOIN alunos
+
+        ON alunos.id = presencas.aluno_id
+
+        ORDER BY presencas.data DESC
+
+        """)
 
     relatorio = cursor.fetchall()
 
