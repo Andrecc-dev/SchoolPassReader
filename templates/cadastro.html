@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Aluno</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static',
+    filename='style_cadastro.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Cadastro de Aluno</h1>
+
+        <p class="subtitulo">
+            Registre novos alunos no SmartPresence
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="nome"
+                placeholder="Nome do aluno"
+                required
+            >
+
+            <input
+                type="number"
+                name="idade"
+                placeholder="Idade"
+                required
+            >
+
+            <input
+                type="text"
+                name="turma"
+                placeholder="Turma"
+                required
+            >
+
+            <input
+                type="text"
+                name="matricula"
+                placeholder="Matrícula"
+                required
+            >
+
+            <button type="submit">
+
+                Cadastrar
+
+            </button>
+
+        </form>
+
+        {% if mensagem %}
+
+            <div class="mensagem">
+
+                {{ mensagem }}
+
+            </div>
+
+        {% endif %}
+
+        <a href="/" class="voltar">
+
+            Voltar ao início
+
+        </a>
+
+    </div>
+
+</body>
+
+</html>

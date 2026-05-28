@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Registrar Acesso</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static',
+    filename='style_acesso.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Registrar Acesso</h1>
+
+        <p class="subtitulo">
+
+            Entrada e saída automática dos alunos
+
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="matricula"
+                placeholder="Digite a matrícula"
+                required
+                autofocus
+            >
+
+            <button type="submit">
+
+                Registrar
+
+            </button>
+
+        </form>
+
+        {% if mensagem %}
+
+            <div class="mensagem">
+
+                {{ mensagem }}
+
+            </div>
+
+        {% endif %}
+
+        <a href="/" class="voltar">
+
+            Voltar ao início
+
+        </a>
+
+    </div>
+
+</body>
+
+</html>

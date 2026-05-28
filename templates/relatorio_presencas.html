@@ -8,11 +8,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Alunos</title>
+    <title>Relatório de Presenças</title>
 
     <link rel="stylesheet"
     href="{{ url_for('static',
-    filename='style_alunos.css') }}">
+    filename='style_relatorio_presencas.css') }}">
 
 </head>
 
@@ -20,11 +20,11 @@
 
     <div class="container">
 
-        <h1>Alunos Cadastrados</h1>
+        <h1>Relatório de Presenças</h1>
 
         <p class="subtitulo">
 
-            Lista de alunos registrados no sistema
+            Presenças acadêmicas registradas
 
         </p>
 
@@ -34,15 +34,15 @@
 
                 <tr>
 
-                    <th>ID</th>
-
                     <th>Nome</th>
-
-                    <th>Idade</th>
 
                     <th>Turma</th>
 
                     <th>Matrícula</th>
+
+                    <th>Data</th>
+
+                    <th>Status</th>
 
                 </tr>
 
@@ -50,19 +50,19 @@
 
             <tbody>
 
-                {% for aluno in alunos %}
+                {% for presenca in relatorio %}
 
                     <tr>
 
-                        <td>{{ aluno[0] }}</td>
+                        <td>{{ presenca[0] }}</td>
 
-                        <td>{{ aluno[1] }}</td>
+                        <td>{{ presenca[1] }}</td>
 
-                        <td>{{ aluno[2] }}</td>
+                        <td>{{ presenca[2] }}</td>
 
-                        <td>{{ aluno[3] }}</td>
+                        <td>{{ presenca[3] }}</td>
 
-                        <td>{{ aluno[4] }}</td>
+                        <td>{{ presenca[4] }}</td>
 
                     </tr>
 

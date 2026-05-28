@@ -8,11 +8,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Alunos</title>
+    <title>Relatório de Acessos</title>
 
     <link rel="stylesheet"
     href="{{ url_for('static',
-    filename='style_alunos.css') }}">
+    filename='style_relatorio_acessos.css') }}">
 
 </head>
 
@@ -20,11 +20,11 @@
 
     <div class="container">
 
-        <h1>Alunos Cadastrados</h1>
+        <h1>Relatório de Acessos</h1>
 
         <p class="subtitulo">
 
-            Lista de alunos registrados no sistema
+            Entradas e saídas registradas no sistema
 
         </p>
 
@@ -34,15 +34,15 @@
 
                 <tr>
 
-                    <th>ID</th>
-
                     <th>Nome</th>
-
-                    <th>Idade</th>
 
                     <th>Turma</th>
 
                     <th>Matrícula</th>
+
+                    <th>Tipo</th>
+
+                    <th>Horário</th>
 
                 </tr>
 
@@ -50,19 +50,19 @@
 
             <tbody>
 
-                {% for aluno in alunos %}
+                {% for acesso in relatorio %}
 
                     <tr>
 
-                        <td>{{ aluno[0] }}</td>
+                        <td>{{ acesso[0] }}</td>
 
-                        <td>{{ aluno[1] }}</td>
+                        <td>{{ acesso[1] }}</td>
 
-                        <td>{{ aluno[2] }}</td>
+                        <td>{{ acesso[2] }}</td>
 
-                        <td>{{ aluno[3] }}</td>
+                        <td>{{ acesso[3] }}</td>
 
-                        <td>{{ aluno[4] }}</td>
+                        <td>{{ acesso[4] }}</td>
 
                     </tr>
 
