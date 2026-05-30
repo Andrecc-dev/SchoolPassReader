@@ -1,107 +1,136 @@
-* {
-
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-}
-
-body {
-
-    background: #0f172a;
-
-    color: white;
-
-    min-height: 100vh;
-
-    padding: 30px;
-
-}
-
-.container {
-
-    max-width: 1100px;
-
-    margin: auto;
-
-    background: #1e293b;
-
-    padding: 40px;
-
-    border-radius: 20px;
-
-    box-shadow: 0px 0px 30px rgba(0,0,0,0.3);
-
-}
-
-h1 {
-
-    font-size: 40px;
-
-    margin-bottom: 10px;
-
-}
-
-.subtitulo {
-
-    color: #94a3b8;
-
-    margin-bottom: 30px;
-
-}
-
-table {
-
+/* ==========================================================================
+   BARRA DE PESQUISA
+   ========================================================================== */
+.pesquisa-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 35px;
     width: 100%;
+}
 
-    border-collapse: collapse;
-
-    overflow: hidden;
-
+.input-pesquisa {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 14px 20px;
     border-radius: 12px;
-
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-thead {
-
-    background: #334155;
-
+.input-pesquisa:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
 }
 
-th {
+.btn-buscar {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-    padding: 16px;
+.btn-buscar:hover {
+    transform: scale(1.03);
+    opacity: 0.9;
+}
 
+/* ==========================================================================
+   TABELA (Design System e Responsividade)
+   ========================================================================== */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Cria barra de rolagem se a tabela for maior que a tela */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.3); /* Fundo sutil para a tabela */
+    margin-bottom: 30px;
+}
+
+.tabela-alunos {
+    width: 100%;
+    border-collapse: collapse; /* Remove os espaços duplos entre as bordas */
     text-align: left;
-
+    font-size: 15px;
 }
 
-td {
-
-    padding: 16px;
-
-    border-bottom: 1px solid #334155;
-
+/* Cabeçalho da Tabela */
+.tabela-alunos th {
+    background-color: rgba(15, 23, 42, 0.6);
+    color: #94a3b8; /* Tom cinza claro para os títulos */
+    padding: 18px 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 
-tr:hover {
-
-    background: #334155;
-
+/* Linhas da Tabela */
+.tabela-alunos td {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    vertical-align: middle;
 }
 
-.voltar {
+/* Efeito Hover nas linhas */
+.tabela-alunos tr:hover td {
+    background: rgba(255, 255, 255, 0.03); /* Brilho sutil na linha focada */
+    color: white;
+}
 
+/* Customizações de colunas específicas */
+.nome-aluno {
+    font-weight: 600;
+    color: white !important;
+}
+
+.codigo-matricula {
+    font-family: 'Courier New', Courier, monospace; /* Estilo código para ID/Matrícula */
+    color: #3b82f6;
+}
+
+.badge-turma {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   LINK VOLTAR
+   ========================================================================== */
+.btn-voltar {
     display: inline-block;
-
-    margin-top: 30px;
-
+    color: #94a3b8;
     text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+    margin-top: 10px;
+}
 
-    color: #93c5fd;
+.btn-voltar:hover {
+    color: white;
+}
 
+/* ==========================================================================
+   RESPONSIVIDADE MEDIA QUERY
+   ========================================================================== */
+@media (max-width: 500px) {
+    .pesquisa-container {
+        flex-direction: column;
+    }
+    .btn-buscar {
+        padding: 14px;
+    }
 }

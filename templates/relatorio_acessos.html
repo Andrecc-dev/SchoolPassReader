@@ -2,18 +2,13 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Relatório de Acessos</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static',
-    filename='style_relatorio_acessos.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Acessos - SchoolPassReader</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_global.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_relatorio_acessos.css') }}">
 </head>
 
 <body>
@@ -21,78 +16,49 @@
     <div class="container">
 
         <h1>Relatório de Acessos</h1>
+        <p class="subtitulo">Entradas e saídas registradas no sistema</p>
 
-        <p class="subtitulo">
-
-            Entradas e saídas registradas no sistema
-
-        </p>
-
-        <form method="GET" class="pesquisa">
-
-    <input
-        type="text"
-        name="busca"
-        placeholder="Pesquisar acesso..."
-    >
-
-    <button type="submit">
-
-        Buscar
-
-    </button>
-
+        <form method="GET" class="pesquisa-container" autocomplete="off">
+            <input 
+                type="text" 
+                name="busca" 
+                placeholder="Pesquisar acesso por nome, matrícula ou tipo..."
+                class="input-pesquisa"
+                value="{{ request.args.get('busca', '') }}"
+            >
+            <button type="submit" class="btn-buscar">Buscar</button>
         </form>
 
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Nome</th>
-
-                    <th>Turma</th>
-
-                    <th>Matrícula</th>
-
-                    <th>Tipo</th>
-
-                    <th>Horário</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for acesso in relatorio %}
-
+        <div class="table-wrapper">
+            <table class="tabela-acessos">
+                <thead>
                     <tr>
-
-                        <td>{{ acesso[0] }}</td>
-
-                        <td>{{ acesso[1] }}</td>
-
-                        <td>{{ acesso[2] }}</td>
-
-                        <td>{{ acesso[3] }}</td>
-
-                        <td>{{ acesso[4] }}</td>
-
+                        <th>Nome</th>
+                        <th>Turma</th>
+                        <th>Matrícula</th>
+                        <th>Tipo</th>
+                        <th>Horário</th>
                     </tr>
+                </thead>
+                <tbody>
+                    {% for acesso in relatorio %}
+                        <tr>
+                            <td class="nome-aluno">{{ acesso[0] }}</td>
+                            <td><span class="badge-turma">{{ acesso[1] }}</span></td>
+                            <td class="codigo-matricula">{{ acesso[2] }}</td>
+                            <td>
+                                <span class="badge-movimentacao {% if 'ent' in acesso[3]|lower %}tipo-entrada{% else %}tipo-saida{% endif %}">
+                                    {{ acesso[3] }}
+                                </span>
+                            </td>
+                            <td class="horario-registro">{{ acesso[4] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-        <a href="/" class="voltar">
-
-            Voltar ao início
-
-        </a>
+        <a href="/" class="btn-voltar">Voltar ao início</a>
 
     </div>
 

@@ -2,18 +2,13 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Cadastro de Aluno</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static',
-    filename='style_cadastro.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aluno - SchoolPassReader</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_global.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_cadastro.css') }}">
 </head>
 
 <body>
@@ -21,79 +16,59 @@
     <div class="container">
 
         <h1>Cadastro de Aluno</h1>
+        <p class="subtitulo">Registre novos alunos no SmartPresence</p>
 
-        <p class="subtitulo">
-            Registre novos alunos no SmartPresence
-        </p>
+        <form method="POST" class="formulario-cadastro" autocomplete="off">
+            
+            
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite o nome do aluno" required>
+            </div>
 
-        <form method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="idade">Idade</label>
+                    <input 
+                        type="text" 
+                        id="idade"
+                        name="idade" 
+                        placeholder="Ex: 16"
+                        oninput="this.value = this.value.replace(/\D/g, '')"
+                        maxlength="3"
+                        required
+                    > 
+                </div>
 
-            <input
-                type="text"
-                name="nome"
-                placeholder="Nome do aluno"
-                required
-            >
+                <div class="form-group">
+                    <label for="turma">Turma</label>
+                    <input type="text" id="turma" name="turma" placeholder="Ex: 3º Ano A" required>
+                </div>
+            </div>
 
-            <input
-            type="text"
-            name="idade"
-            placeholder="Idade"
+            <div class="form-group">
+                <label for="matricula">Número da Matrícula / ID</label>
+                <input 
+                    type="text" 
+                    id="matricula"
+                    name="matricula" 
+                    placeholder="Digite ou passe a carteirinha no leitor..."
+                    oninput="this.value = this.value.replace(/\D/g, '')"
+                    maxlength="10"
+                    required
+                >
+            </div>
 
-            oninput="
-            this.value =
-            this.value.replace(/\D/g, '')
-            "
-
-            maxlength="3"
-
-            required
-            >   
-
-            <input
-                type="text"
-                name="turma"
-                placeholder="Turma"
-                required
-            >
-
-            <input
-                type="text"
-                name="matricula"
-                placeholder="Matrícula"
-
-                oninput="
-                this.value =
-                this.value.replace(/\D/g, '')
-                "
-
-                maxlength="10"
-
-                required
-            >
-            <button type="submit">
-
-                Cadastrar
-
-            </button>
-
+            <button type="submit" class="btn-cadastrar">Finalizar Cadastro</button>
         </form>
 
         {% if mensagem %}
-
-            <div class="mensagem">
-
+            <div class="mensagem {% if 'sucesso' in mensagem.lower() %}sucesso{% else %}erro{% endif %}">
                 {{ mensagem }}
-
             </div>
-
         {% endif %}
 
-        <a href="/" class="voltar">
-
-            Voltar ao início
-
-        </a>
+        <a href="/" class="btn-voltar">Voltar ao início</a>
 
     </div>
 

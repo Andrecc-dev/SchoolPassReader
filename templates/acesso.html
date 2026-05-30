@@ -2,18 +2,13 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Registrar Acesso</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static',
-    filename='style_acesso.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Acesso - SchoolPassReader</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_global.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_acesso.css') }}">
 </head>
 
 <body>
@@ -21,72 +16,36 @@
     <div class="container">
 
         <h1>Registrar Acesso</h1>
+        <p class="subtitulo">Entrada e saída automática dos alunos</p>
 
-        <p class="subtitulo">
+        <form method="POST" class="formulario-acesso" autocomplete="off">
+            
+            <div class="input-group">
+                <select name="tipo_busca" required class="select-personalizado">
+                    <option value="matricula">Matrícula</option>
+                    <option value="nome">Nome</option>
+                </select>
 
-            Entrada e saída automática dos alunos
-
-        </p>
-
-        <form method="POST">
-
-            <select
-                name="tipo_busca"
-                required
-            >
-
-                <option value="matricula">
-
-                    Matrícula
-
-                </option>
-
-                <option value="nome">
-
-                    Nome
-
-                </option>
-
-            </select>
-
-            <input
-
-                type="text"
-
-                name="valor"
-
-                placeholder="
-                Digite a matrícula ou nome
-                "
-
-                required
-
-                autofocus
-
-            >
-
-            <button type="submit">
-
-                Registrar
-
-            </button>
-
-        </form>
-        {% if mensagem %}
-
-            <div class="mensagem">
-
-                {{ mensagem }}
-
+                <input 
+                    type="text" 
+                    name="valor" 
+                    placeholder="Digite a matrícula ou nome..." 
+                    required 
+                    autofocus 
+                    class="input-texto"
+                >
             </div>
 
-        {% endif %}
+            <button type="submit" class="btn-registrar">Registrar</button>
+        </form>
 
-        <a href="/" class="voltar">
+        {% if mensagem %}
+            <div class="mensagem {% if 'entrada' in mensagem.lower() or 'sucesso' in mensagem.lower() %}sucesso{% else %}erro{% endif %}">
+                {{ mensagem }}
+            </div>
+            {% endif %}
 
-            Voltar ao início
-
-        </a>
+        <a href="/" class="btn-voltar">Voltar ao início</a>
 
     </div>
 

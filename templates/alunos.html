@@ -2,18 +2,13 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Alunos</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static',
-    filename='style_alunos.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos Cadastrados - SchoolPassReader</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_global.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_alunos.css') }}">
 </head>
 
 <body>
@@ -21,80 +16,45 @@
     <div class="container">
 
         <h1>Alunos Cadastrados</h1>
+        <p class="subtitulo">Lista de alunos registrados no sistema</p>
 
-        <p class="subtitulo">
+        <form method="GET" class="pesquisa-container" autocomplete="off">
+            <input 
+                type="text" 
+                name="busca" 
+                placeholder="Pesquisar aluno por nome ou matrícula..."
+                class="input-pesquisa"
+                value="{{ request.args.get('busca', '') }}"
+            >
+            <button type="submit" class="btn-buscar">Buscar</button>
+        </form>
 
-    Lista de alunos registrados no sistema
-
-</p>
-
-<!-- BARRA DE PESQUISA -->
-
-<form method="GET" class="pesquisa">
-
-    <input
-        type="text"
-        name="busca"
-        placeholder="Pesquisar aluno..."
-    >
-
-    <button type="submit">
-
-        Buscar
-
-    </button>
-
-</form>
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>ID</th>
-
-                    <th>Nome</th>
-
-                    <th>Idade</th>
-
-                    <th>Turma</th>
-
-                    <th>Matrícula</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for aluno in alunos %}
-
+        <div class="table-wrapper">
+            <table class="tabela-alunos">
+                <thead>
                     <tr>
-
-                        <td>{{ aluno[0] }}</td>
-
-                        <td>{{ aluno[1] }}</td>
-
-                        <td>{{ aluno[2] }}</td>
-
-                        <td>{{ aluno[3] }}</td>
-
-                        <td>{{ aluno[4] }}</td>
-
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Idade</th>
+                        <th>Turma</th>
+                        <th>Matrícula</th>
                     </tr>
+                </thead>
+                <tbody>
+                    {% for aluno in alunos %}
+                        <tr>
+                            <td>{{ aluno[0] }}</td>
+                            <td class="nome-aluno">{{ aluno[1] }}</td>
+                            <td>{{ aluno[2] }}</td>
+                            <td><span class="badge-turma">{{ aluno[3] }}</span></td>
+                            <td class="codigo-matricula">{{ aluno[4] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-        <a href="/" class="voltar">
-
-            Voltar ao início
-
-        </a>
+        <a href="/" class="btn-voltar">Voltar ao início</a>
 
     </div>
 

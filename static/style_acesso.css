@@ -1,153 +1,126 @@
-* {
-
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-}
-
-body {
-
-    background: #0f172a;
-
-    min-height: 100vh;
-
+/* ==========================================================================
+   FORMULÁRIO E INPUTS (Mantendo o padrão Slate/Glassmorphism)
+   ========================================================================== */
+.formulario-acesso {
+    max-width: 600px;
+    margin: 0 auto;
     display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 30px;
-
-}
-
-.container {
-
-    width: 100%;
-
-    max-width: 500px;
-
-    background: #1e293b;
-
-    padding: 40px;
-
-    border-radius: 20px;
-
-    box-shadow: 0px 0px 30px rgba(0,0,0,0.3);
-
-}
-
-h1 {
-
-    color: white;
-
-    margin-bottom: 10px;
-
-    font-size: 36px;
-
-}
-
-.subtitulo {
-
-    color: #94a3b8;
-
-    margin-bottom: 30px;
-
-}
-
-form {
-
-    display: flex;
-
     flex-direction: column;
-
-    gap: 15px;
-
+    gap: 20px;
 }
 
-input {
+/* Agrupa o Select e o Input de texto na mesma linha */
+.input-group {
+    display: flex;
+    gap: 12px;
+}
 
-    padding: 16px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #334155;
-
+.select-personalizado,
+.input-texto {
+    background: rgba(15, 23, 42, 0.6); /* Fundo escuro para contraste no vidro */
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
-
-    font-size: 18px;
-
-    text-align: center;
-
-}
-
-input::placeholder {
-
-    color: #cbd5e1;
-
-}
-
-button {
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #22c55e;
-
-    color: white;
-
+    padding: 14px 18px;
+    border-radius: 12px;
     font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-    font-weight: bold;
-
+.select-personalizado {
     cursor: pointer;
-
-    transition: 0.2s;
-
+    max-width: 140px;
 }
 
-button:hover {
-
-    background: #16a34a;
-
+/* estilização das opções dentro do select para sistemas que renderizam nativamente */
+.select-personalizado option {
+    background-color: #0f172a;
+    color: white;
 }
 
-.mensagem {
+.input-texto {
+    flex: 1; /* Faz o input de texto ocupar todo o espaço restante */
+}
 
-    margin-top: 20px;
+/* Efeito de foco padrão azul do seu sistema */
+.select-personalizado:focus,
+.input-texto:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
 
+/* ==========================================================================
+   BOTÃO DE REGISTRO
+   ========================================================================== */
+.btn-registrar {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
     padding: 15px;
-
-    border-radius: 10px;
-
-    background: #14532d;
-
-    color: #dcfce7;
-
-    text-align: center;
-
+    border-radius: 12px;
     font-weight: bold;
-
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.voltar {
+.btn-registrar:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
 
-    display: inline-block;
-
+/* ==========================================================================
+   MENSAGENS DE FEEDBACK (Essencial para o Totem)
+   ========================================================================== */
+.mensagem {
     margin-top: 25px;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid transparent;
+}
 
+/* Se for sucesso: Verde sutil estilo Tailwind */
+.mensagem.sucesso {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #4ade80;
+}
+
+/* Se for erro: Vermelho sutil estilo Tailwind */
+.mensagem.erro {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+/* ==========================================================================
+   LINK VOLTAR
+   ========================================================================== */
+.btn-voltar {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: #94a3b8;
     text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
 
-    color: #93c5fd;
+.btn-voltar:hover {
+    color: white;
+}
 
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 480px) {
+    .input-group {
+        flex-direction: column;
+    }
+    .select-personalizado {
+        max-width: 100%;
+    }
 }
