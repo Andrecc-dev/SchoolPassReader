@@ -1,12 +1,16 @@
 import sqlite3
+import os
 
 # =========================================
-# CONEXÃO
+# CONEXÃO INTELIGENTE (FIXA NA PASTA DO APP)
 # =========================================
-
 def conectar_banco():
-
-    return sqlite3.connect("escola.db")
+    # Descobre o caminho exato da pasta onde o database.py está guardado
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+    # Junta essa pasta com o nome do banco de dados
+    caminho_banco = os.path.join(diretorio_atual, "escola.db")
+    
+    return sqlite3.connect(caminho_banco)
 
 # =========================================
 # CRIAR TABELAS
