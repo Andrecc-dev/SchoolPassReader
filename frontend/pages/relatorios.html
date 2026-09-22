@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolPassReader - Relatórios</title>
+  
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="../style/global.css">
+  
+  <!-- Estilos Exclusivos da Página de Relatórios -->
+  <link rel="stylesheet" href="../style/relatorios.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar / Menu Lateral -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">
+          <h2>SchoolPassReader</h2>
+          <p>Painel administrativo</p>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">📊 Dashboard</a></li>
+          <li><a href="alunos.html" class="nav-link">👥 Alunos</a></li>
+          <li><a href="acessos.html" class="nav-link">🚪 Acessos</a></li>
+          <li><a href="relatorios.html" class="nav-link active">📄 Relatórios</a></li>
+          <li><a href="configuracoes.html" class="nav-link">⚙️ Configurações</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      
+      <header class="header-title">
+        <h1>Relatórios de Frequência</h1>
+        <p>Gere e consulte históricos detalhados de presença dos alunos.</p>
+      </header>
+
+      <!-- Filtros do Relatório -->
+      <section class="filters-bar">
+        <div class="filter-group">
+          <label for="date-start">Data Inicial</label>
+          <input type="date" id="date-start" class="filter-control">
+        </div>
+
+        <div class="filter-group">
+          <label for="date-end">Data Final</label>
+          <input type="date" id="date-end" class="filter-control">
+        </div>
+
+        <div class="filter-group">
+          <label for="select-turma">Turma</label>
+          <select id="select-turma" class="filter-control">
+            <option value="todas">Todas as Turmas</option>
+            <option value="3a">3º Ano A - Técnico</option>
+            <option value="2b">2º Ano B - Ensino Médio</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="select-status">Status</label>
+          <select id="select-status" class="filter-control">
+            <option value="todos">Todos</option>
+            <option value="presente">Apenas Presentes</option>
+            <option value="ausente">Apenas Faltas</option>
+          </select>
+        </div>
+
+        <button class="btn-export" id="btn-export">📥 Exportar CSV</button>
+      </section>
+
+      <!-- Métricas do Período Selecionado -->
+      <section class="reports-summary">
+        <div class="summary-card">
+          <p>Total de Registros</p>
+          <h3 id="total-registros">—</h3>
+        </div>
+        <div class="summary-card">
+          <p>Média de Frequência</p>
+          <h3 style="color: var(--success-color);" id="media-frequencia">—</h3>
+        </div>
+        <div class="summary-card">
+          <p>Total de Ausências</p>
+          <h3 style="color: var(--danger-color);" id="total-faltas">—</h3>
+        </div>
+      </section>
+
+      <!-- Tabela do Relatório -->
+      <section class="reports-panel">
+        <table class="reports-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Matrícula</th>
+              <th>Aluno</th>
+              <th>Turma</th>
+              <th>Entrada</th>
+              <th>Saída</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="reports-list">
+            <tr>
+              <td>22/09/2026</td>
+              <td>2026001</td>
+              <td><strong>Gabriel Silva</strong></td>
+              <td>3º Ano A - Técnico</td>
+              <td>07:15</td>
+              <td>12:30</td>
+              <td><span class="badge-status badge-presente">Presente</span></td>
+            </tr>
+            <tr>
+              <td>22/09/2026</td>
+              <td>2026002</td>
+              <td><strong>Beatriz Lima</strong></td>
+              <td>2º Ano B - Ensino Médio</td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="badge-status badge-falta">Ausente</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+  </div>
+</body>
+</html>

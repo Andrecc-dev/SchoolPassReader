@@ -1,83 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SchoolPassReader</title>
-    <!-- CSS Global -->
-    <link rel="stylesheet" href="../style/global.css">
-    <!-- CSS Específico da Página Inicial -->
-    <link rel="stylesheet" href="../style/dashboard.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolPassReader - Dashboard</title>
+  
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="../style/global.css">
+  
+  <!-- Estilos Exclusivos do Dashboard -->
+  <link rel="stylesheet" href="../style/dashboard.css">
 </head>
 <body>
+  <div class="app-container">
+    
+    <!-- Sidebar / Menu Lateral -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">
+          <h2>SchoolPassReader</h2>
+          <p>Painel administrativo</p>
+        </div>
+      </div>
 
-    <div class="app-container">
-        <!-- HEADER -->
-        <header class="main-header">
-            <h1 class="brand-title">SchoolPassReader</h1>
-            <p class="brand-subtitle">Sistema inteligente de presença escolar</p>
-        </header>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link active">📊 Dashboard</a></li>
+          <li><a href="alunos.html" class="nav-link">👥 Alunos</a></li>
+          <li><a href="acessos.html" class="nav-link">🚪 Acessos</a></li>
+          <li><a href="relatorios.html" class="nav-link">📄 Relatórios</a></li>
+          <li><a href="configuracoes.html" class="nav-link">⚙️ Configurações</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-        <!-- MAIN -->
-        <main class="main-content">
-            <div class="dashboard-grid">
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      <header class="header-title">
+        <h1>Visão geral</h1>
+        <p>Acompanhe o fluxo escolar.</p>
+      </header>
 
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Cadastrar Aluno</h3>
-                        <p>Registrar novos alunos no sistema.</p>
-                    </div>
-                    <a href="cadastrar.html" class="btn-primary">Acessar</a>
-                </div>
+      <!-- Cards de Estatísticas -->
+      <section class="dashboard-grid">
+        <div class="card">
+          <div class="card-title">Alunos <span>👥</span></div>
+          <div class="card-value" id="total-alunos">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Presentes <span>✅</span></div>
+          <div class="card-value" id="total-presentes">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Entradas <span>↘️</span></div>
+          <div class="card-value" id="total-entradas">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Saídas <span>↗️</span></div>
+          <div class="card-value" id="total-saidas">—</div>
+        </div>
+      </section>
 
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Registrar Acesso</h3>
-                        <p>Registrar entrada ou saída.</p>
-                    </div>
-                    <a href="acesso.html" class="btn-primary">Acessar</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Listar Alunos</h3>
-                        <p>Ver alunos cadastrados.</p>
-                    </div>
-                    <a href="alunos.html" class="btn-primary">Acessar</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Relatório de Acessos</h3>
-                        <p>Ver entradas e saídas.</p>
-                    </div>
-                    <a href="relatorio-acessos.html" class="btn-primary">Acessar</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Relatório de Presenças</h3>
-                        <p>Ver chamadas registradas.</p>
-                    </div>
-                    <a href="relatorio-presencas.html" class="btn-primary">Acessar</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Configurações</h3>
-                        <p>Gerenciar dados e leitores.</p>
-                    </div>
-                    <a href="configuracoes.html" class="btn-primary">Acessar</a>
-                </div>
-
+      <!-- Painel de Atividades -->
+      <section class="activity-panel">
+        <div class="activity-header">Atividade recente</div>
+        <div class="activity-list" id="activity-feed">
+          
+          <div class="activity-item">
+            <div class="activity-info">
+              <strong style="color: var(--success-color);">↘ Entrada registrada</strong>
+              <p>Aluno • Horário</p>
             </div>
-        </main>
-    </div>
+            <span class="activity-time">—</span>
+          </div>
 
-    <!-- FOOTER -->
-    <footer class="main-footer">
-        <p>SchoolPassReader &copy; 2026 • Desenvolvido pelo <span>Elza Lemos Andreatta</span></p>
-    </footer>
+          <div class="activity-item">
+            <div class="activity-info">
+              <strong style="color: var(--danger-color);">↗ Saída registrada</strong>
+              <p>Aluno • Horário</p>
+            </div>
+            <span class="activity-time">—</span>
+          </div>
 
+        </div>
+      </section>
+    </main>
+
+  </div>
 </body>
 </html>

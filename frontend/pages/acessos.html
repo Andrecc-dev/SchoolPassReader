@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolPassReader - Registro de Acessos</title>
+  
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="../style/global.css">
+  
+  <!-- Estilos Exclusivos da Página de Acessos -->
+  <link rel="stylesheet" href="../style/acessos.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar / Menu Lateral -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">
+          <h2>SchoolPassReader</h2>
+          <p>Painel administrativo</p>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">📊 Dashboard</a></li>
+          <li><a href="alunos.html" class="nav-link">👥 Alunos</a></li>
+          <li><a href="acessos.html" class="nav-link active">🚪 Acessos</a></li>
+          <li><a href="relatorios.html" class="nav-link">📄 Relatórios</a></li>
+          <li><a href="configuracoes.html" class="nav-link">⚙️ Configurações</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      
+      <header class="header-title">
+        <h1>Fluxo de Acessos</h1>
+        <p>Acompanhe e registre em tempo real a entrada e saída dos alunos.</p>
+      </header>
+
+      <!-- Controles de Busca e Inclusão Manual -->
+      <section class="access-controls">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="input-search-access" placeholder="Filtrar por nome, matrícula ou turma...">
+        </div>
+        <button class="btn-manual-entry" id="btn-register-access">+ Registrar Acesso Manual</button>
+      </section>
+
+      <!-- Tabela Dinâmica de Registros de Acesso -->
+      <section class="access-panel">
+        <table class="access-table">
+          <thead>
+            <tr>
+              <th>Horário</th>
+              <th>Data</th>
+              <th>Tipo</th>
+              <th>Aluno</th>
+              <th>Matrícula</th>
+              <th>Turma</th>
+              <th>Dispositivo / Origem</th>
+            </tr>
+          </thead>
+          <tbody id="access-logs-body">
+            <!-- Linha modelo preparada para template do JS -->
+            <tr data-access-id="101" data-student-id="2026001">
+              <td><strong>07:14:22</strong></td>
+              <td>22/09/2026</td>
+              <td><span class="access-type type-entrada">↘ Entrada</span></td>
+              <td><strong>Gabriel Silva</strong></td>
+              <td>2026001</td>
+              <td>3º Ano A - Técnico</td>
+              <td><span class="origin-tag">Totem Portaria A</span></td>
+            </tr>
+
+            <tr data-access-id="102" data-student-id="2026002">
+              <td><strong>12:30:05</strong></td>
+              <td>22/09/2026</td>
+              <td><span class="access-type type-saida">↗ Saída</span></td>
+              <td><strong>Beatriz Lima</strong></td>
+              <td>2026002</td>
+              <td>2º Ano B - Ensino Médio</td>
+              <td><span class="origin-tag">Leitor Manual (Coordenação)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+  </div>
+</body>
+</html>

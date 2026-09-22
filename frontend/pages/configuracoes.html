@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolPassReader - Configurações</title>
+  
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="../style/global.css">
+  
+  <!-- Estilos Exclusivos da Página de Configurações -->
+  <link rel="stylesheet" href="../style/configuracoes.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar / Menu Lateral -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">
+          <h2>SchoolPassReader</h2>
+          <p>Painel administrativo</p>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">📊 Dashboard</a></li>
+          <li><a href="alunos.html" class="nav-link">👥 Alunos</a></li>
+          <li><a href="acessos.html" class="nav-link">🚪 Acessos</a></li>
+          <li><a href="relatorios.html" class="nav-link">📄 Relatórios</a></li>
+          <li><a href="configuracoes.html" class="nav-link active">⚙️ Configurações</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      
+      <header class="header-title">
+        <h1>Configurações do Sistema</h1>
+        <p>Ajuste parâmetros operacionais, leitores de acesso e preferências da escola.</p>
+      </header>
+
+      <section class="settings-container">
+        
+        <!-- Menu Lateral de Abas -->
+        <div class="settings-nav">
+          <button class="settings-tab active" data-target="tab-geral">⚙️ Geral</button>
+          <button class="settings-tab" data-target="tab-leitores">📲 Leitores & Totens</button>
+          <button class="settings-tab" data-target="tab-notificacoes">🔔 Notificações</button>
+          <button class="settings-tab" data-target="tab-banco">🗄️ Banco de Dados</button>
+        </div>
+
+        <!-- Conteúdo da Aba Ativa -->
+        <div class="settings-panel">
+          
+          <div class="settings-section-title">
+            <h3>Parâmetros da Instituição</h3>
+            <p>Informações usadas nos relatórios e regras do controle de presença.</p>
+          </div>
+
+          <form id="form-settings-general" onsubmit="event.preventDefault();">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="school-name">Nome da Escola / Instituição</label>
+                <input type="text" id="school-name" class="form-control" value="Escola Téc. SENAI">
+              </div>
+
+              <div class="form-group">
+                <label for="tolerance-time">Tolerância de Atraso (minutos)</label>
+                <input type="number" id="tolerance-time" class="form-control" value="15">
+              </div>
+
+              <div class="form-group">
+                <label for="shift-start">Horário de Início das Aulas</label>
+                <input type="time" id="shift-start" class="form-control" value="07:00">
+              </div>
+
+              <div class="form-group">
+                <label for="shift-end">Horário de Término</label>
+                <input type="time" id="shift-end" class="form-control" value="12:30">
+              </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+
+            <div class="settings-section-title">
+              <h3>Regras de Entrada/Saída</h3>
+              <p>Defina o comportamento do sistema para chamadas e acessos duplos.</p>
+            </div>
+
+            <div class="toggle-list">
+              <div class="toggle-item">
+                <div class="toggle-info">
+                  <h4>Bloquear Registro Duplicado</h4>
+                  <p>Impede que o mesmo aluno registre presença mais de uma vez na mesma janela de tempo.</p>
+                </div>
+                <input type="checkbox" id="prevent-duplicate" checked style="accent-color: var(--primary-color); transform: scale(1.2);">
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-info">
+                  <h4>Permitir Contraturno</h4>
+                  <p>Aceita registros no período vespertino/noturno para alunos cadastrados.</p>
+                </div>
+                <input type="checkbox" id="allow-overtime" checked style="accent-color: var(--primary-color); transform: scale(1.2);">
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+              <button type="submit" class="btn-save-settings" id="btn-save-general">Salvar Alterações</button>
+            </div>
+          </form>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+</body>
+</html>
