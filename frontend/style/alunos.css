@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .search-input {
@@ -31,6 +32,7 @@
   font-weight: 600;
   font-size: 0.9rem;
   transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
 .btn-add:hover {
@@ -44,12 +46,14 @@
   border-radius: 12px;
   padding: 1.25rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .students-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  min-width: 600px; /* Garante scroll horizontal em telas muito pequenas */
 }
 
 .students-table th {
@@ -100,4 +104,21 @@
 
 .btn-action-edit:hover {
   color: var(--text-main);
+}
+
+/* Responsividade de Alunos */
+@media (max-width: 768px) {
+  .actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input,
+  .btn-add {
+    width: 100%;
+  }
+
+  .students-panel {
+    padding: 0.75rem;
+  }
 }

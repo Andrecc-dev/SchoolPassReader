@@ -24,23 +24,28 @@ body {
   background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
+  font-size: 16px;
+  overflow-x: hidden;
 }
 
 /* Estrutura de Layout */
 .app-container {
   display: flex;
   min-height: 100vh;
+  width: 100%;
 }
 
 /* Sidebar Nav */
 .sidebar {
   width: 260px;
+  min-width: 260px;
   background-color: var(--bg-color);
   border-right: 1px solid var(--border-color);
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  flex-shrink: 0;
 }
 
 .brand {
@@ -100,10 +105,11 @@ body {
 /* Conteúdo Principal */
 .main-content {
   flex: 1;
-  padding: 2rem;
+  padding: 1.75rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.75rem;
+  min-width: 0; /* Previne transbordamento do flexbox em notebooks */
 }
 
 .header-title h1 {
@@ -118,18 +124,32 @@ body {
 }
 
 /* ===================================================
-   RESPONSIVIDADE (MOBILE & TABLETS)
+   RESPONSIVIDADE (NOTEBOOKS, TABLETS & MOBILE)
    =================================================== */
 
-@media (max-width: 768px) {
-  /* Muda a orientação do container para vertical */
+/* Notebooks Menores / Laptops (Ajuste de Escala) */
+@media (max-width: 1280px) {
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+    padding: 1.25rem 0.75rem;
+  }
+
+  .main-content {
+    padding: 1.25rem 1.5rem;
+    gap: 1.25rem;
+  }
+}
+
+/* Tablets e Telas Médias */
+@media (max-width: 992px) {
   .app-container {
     flex-direction: column;
   }
 
-  /* Ajusta a sidebar para virar um menu superior no mobile */
   .sidebar {
     width: 100%;
+    min-width: 100%;
     height: auto;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
@@ -139,30 +159,28 @@ body {
 
   .nav-menu {
     flex-direction: row;
-    overflow-x: auto; /* Permite scroll horizontal dos ícones no celular */
-    padding-bottom: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
   }
 
   .nav-link {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
     white-space: nowrap;
   }
 
-  /* Reduz os espaçamentos internos para caber na tela pequena */
   .main-content {
-    padding: 1rem;
-    gap: 1.25rem;
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  .header-title h1 {
+    font-size: 1.25rem;
   }
 
-  /* Ajusta barras de ação e filtros */
-  .actions-bar,
-  .filters-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-input {
-    width: 100%;
+  .header-title p {
+    font-size: 0.8rem;
   }
 }

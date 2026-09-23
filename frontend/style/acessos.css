@@ -8,6 +8,7 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1rem 1.25rem;
+  flex-wrap: wrap;
 }
 
 .search-box {
@@ -54,12 +55,14 @@
   border-radius: 12px;
   padding: 1.25rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .access-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  min-width: 650px;
 }
 
 .access-table th {
@@ -107,7 +110,7 @@
   font-size: 0.8rem;
 }
 
-/* Estilização Responsiva Específica de Acessos */
+/* Responsividade Específica de Acessos */
 @media (max-width: 768px) {
   .access-controls {
     flex-direction: column;
@@ -120,5 +123,9 @@
 
   .btn-manual-entry {
     width: 100%;
+  }
+
+  .access-panel {
+    padding: 0.75rem;
   }
 }

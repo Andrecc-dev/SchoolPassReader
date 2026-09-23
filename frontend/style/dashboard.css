@@ -1,7 +1,7 @@
 /* Grid dos Cards Principais */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.25rem;
 }
 
@@ -58,6 +58,7 @@
   justify-content: space-between;
   padding: 1rem 0;
   border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
 }
 
 .activity-item:last-child {
@@ -78,4 +79,16 @@
 .activity-time {
   font-size: 0.85rem;
   color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Ajustes de Responsividade */
+@media (max-width: 600px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-panel {
+    padding: 1rem;
+  }
 }
